@@ -96,8 +96,8 @@ export default function DashboardPage() {
       willTurnOn ? `${name} switched ON` : `${name} switched OFF`,
       {
         description: willTurnOn
-          ? "Load added to current consumption."
-          : "Consumption reduced instantly.",
+          ? "Appliance turned on."
+          : "Appliance turned off.",
       }
     );
   };
@@ -164,7 +164,7 @@ export default function DashboardPage() {
           className="p-5 rounded-2xl bg-card border border-border/80 shadow-xs relative overflow-hidden"
         >
           <div className="flex items-center justify-between text-muted-foreground mb-3">
-            <span className="text-xs font-medium uppercase tracking-wider">Live Power Demand</span>
+            <span className="text-xs font-semibold tracking-wide">Power being used now</span>
             <div className="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
               <Zap className="w-4 h-4" />
             </div>
@@ -176,11 +176,11 @@ export default function DashboardPage() {
           </div>
           <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground">
             <span>
-              Load: {Math.round((stats.current_power_w / (state.household.connected_load_kw * 1000)) * 100)}% of {state.household.connected_load_kw} kW
+              Estimated use: {Math.round((stats.current_power_w / (state.household.connected_load_kw * 1000)) * 100)}% of {state.household.connected_load_kw} kW home limit
             </span>
             <span className="text-primary font-medium flex items-center gap-1">
               <span className="w-1.5 h-1.5 rounded-full bg-primary animate-ping" />
-              Live
+              Now
             </span>
           </div>
         </motion.div>
@@ -192,7 +192,7 @@ export default function DashboardPage() {
           className="p-5 rounded-2xl bg-card border border-border/80 shadow-xs relative overflow-hidden"
         >
           <div className="flex items-center justify-between text-muted-foreground mb-3">
-            <span className="text-xs font-medium uppercase tracking-wider">Today&apos;s Units</span>
+            <span className="text-xs font-semibold tracking-wide">Electricity used today</span>
             <div className="w-8 h-8 rounded-lg bg-blue-500/10 text-blue-500 flex items-center justify-center">
               <Activity className="w-4 h-4" />
             </div>
@@ -206,7 +206,7 @@ export default function DashboardPage() {
             <span>Cost: {formatCurrency(stats.total_today_kwh * state.household.tariff_rate)}</span>
             <span className="text-emerald-500 font-medium flex items-center gap-0.5">
               <TrendingDown className="w-3 h-3" />
-              4.2% vs avg
+              estimate vs usual
             </span>
           </div>
         </motion.div>
@@ -218,7 +218,7 @@ export default function DashboardPage() {
           className="p-5 rounded-2xl bg-card border border-border/80 shadow-xs relative overflow-hidden"
         >
           <div className="flex items-center justify-between text-muted-foreground mb-3">
-            <span className="text-xs font-medium uppercase tracking-wider">Estimated Bill</span>
+            <span className="text-xs font-semibold tracking-wide">Estimated monthly bill</span>
             <div className="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-500 flex items-center justify-center">
               <ShieldAlert className="w-4 h-4" />
             </div>
@@ -229,9 +229,9 @@ export default function DashboardPage() {
             </span>
           </div>
           <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground">
-            <span>Slab: ₹{currentSlab.rate}/unit</span>
+            <span>Current estimate: ₹{currentSlab.rate}/unit</span>
             <span className="font-medium text-amber-500">
-              {unitsToNextSlab > 0 ? `${unitsToNextSlab} units to next slab` : "Top slab"}
+              {unitsToNextSlab > 0 ? `${unitsToNextSlab} units to next rate` : "Highest rate"}
             </span>
           </div>
         </motion.div>
@@ -243,7 +243,7 @@ export default function DashboardPage() {
           className="p-5 rounded-2xl bg-card border border-border/80 shadow-xs relative overflow-hidden"
         >
           <div className="flex items-center justify-between text-muted-foreground mb-3">
-            <span className="text-xs font-medium uppercase tracking-wider">Appliances Online</span>
+            <span className="text-xs font-semibold tracking-wide">Appliances switched on</span>
             <div className="w-8 h-8 rounded-lg bg-purple-500/10 text-purple-500 flex items-center justify-center">
               <Power className="w-4 h-4" />
             </div>
@@ -259,9 +259,9 @@ export default function DashboardPage() {
           <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground">
             <span className="flex items-center gap-1 text-emerald-500 font-medium">
               <Sun className="w-3.5 h-3.5" />
-              {state.solar.panel_capacity_kw} kW Solar Active
+              {state.solar.panel_capacity_kw} kW solar system
             </span>
-            <span>CO2: -{stats.co2_saved_kg} kg</span>
+            <span>About {stats.co2_saved_kg} kg CO₂ avoided</span>
           </div>
         </motion.div>
       </div>
@@ -297,14 +297,14 @@ export default function DashboardPage() {
           <div className="flex items-center gap-3">
             <AlertTriangle className="w-5 h-5 flex-shrink-0" />
             <p className="text-xs sm:text-sm font-medium">
-              <strong className="font-semibold">Tariff Slab Warning:</strong> You are currently at {stats.total_month_kwh} units. Using {unitsToNextSlab} more units will push your billing rate from ₹{currentSlab.rate} to ₹{nextSlab?.rate}/unit.
+              <strong className="font-semibold">Your estimated rate may go up:</strong> You have used {stats.total_month_kwh} units this month. About {unitsToNextSlab} more units may move your estimate from ₹{currentSlab.rate} to ₹{nextSlab?.rate} per unit.
             </p>
           </div>
           <Link
             href="/analytics"
             className="text-xs font-semibold underline underline-offset-4 flex-shrink-0 hover:text-amber-400"
           >
-            View Slab Breakdown
+            See how the estimate is worked out
           </Link>
         </div>
       )}
@@ -316,15 +316,15 @@ export default function DashboardPage() {
           <div>
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
               <div>
-                <h2 className="text-base font-semibold">24-Hour Electricity Profile</h2>
+                <h2 className="text-base font-semibold">Electricity Use Through the Day</h2>
                 <p className="text-xs text-muted-foreground">
-                  Hourly power curve against solar generation & Kerala peak tariff window (18:00 - 22:00)
+                  Estimated home use and solar power by hour. Evening busy hours are 6–10 PM.
                 </p>
               </div>
               <div className="flex items-center gap-3 text-xs">
                 <span className="flex items-center gap-1.5">
                   <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
-                  Load (W)
+                  Home use (W)
                 </span>
                 <span className="flex items-center gap-1.5">
                   <span className="w-2.5 h-2.5 rounded-full bg-amber-400" />
@@ -332,7 +332,7 @@ export default function DashboardPage() {
                 </span>
                 <span className="flex items-center gap-1.5">
                   <span className="w-2.5 h-2.5 rounded-full bg-red-400/80" />
-                  Peak Window
+                  Evening busy hours
                 </span>
               </div>
             </div>
@@ -376,7 +376,7 @@ export default function DashboardPage() {
                     }}
                     formatter={(value, name) => [
                       `${Number(value || 0).toLocaleString()} W`,
-                      name === "householdPower" ? "Household Load" : "Solar Gen",
+                      name === "householdPower" ? "Home use" : "Solar power",
                     ]}
                     labelFormatter={(label) => `Time: ${label}`}
                   />
@@ -402,8 +402,8 @@ export default function DashboardPage() {
           </div>
 
           <div className="mt-4 pt-3 border-t border-border/60 flex flex-wrap items-center justify-between gap-2 text-xs text-muted-foreground">
-            <span>Peak Demand Recorded: <strong>{formatPower(Math.max(...combinedHourly.map((d) => d.householdPower)))}</strong> at 20:00</span>
-            <span className="text-emerald-500 font-medium">Solar Peak: {formatPower(Math.max(...combinedHourly.map((d) => d.solarPower)))} at 12:00</span>
+            <span>Highest estimated home use: <strong>{formatPower(Math.max(...combinedHourly.map((d) => d.householdPower)))}</strong> around 8 PM</span>
+            <span className="text-emerald-500 font-medium">Highest estimated solar power: {formatPower(Math.max(...combinedHourly.map((d) => d.solarPower)))} around noon</span>
           </div>
         </div>
 
@@ -411,7 +411,7 @@ export default function DashboardPage() {
         <div className="p-5 rounded-2xl bg-card border border-border/80 shadow-xs flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-base font-semibold">Consumption Share</h2>
+              <h2 className="text-base font-semibold">Daily Use by Appliance Type</h2>
               <Link
                 href="/appliances"
                 className="text-xs text-primary hover:underline flex items-center gap-1 font-medium"
@@ -454,7 +454,7 @@ export default function DashboardPage() {
                 <span className="text-xl font-bold tabular-nums">
                   {formatKwh(stats.total_today_kwh)}
                 </span>
-                <span className="block text-[10px] text-muted-foreground">Daily Total</span>
+                  <span className="block text-[10px] text-muted-foreground">Estimated today</span>
               </div>
             </div>
 
@@ -482,19 +482,19 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* Bottom Grid: Quick Control Switches + AI Optimization Suggestions */}
+      {/* Bottom Grid: Appliance Controls + Saving Ideas */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Quick Appliance Controls (2 columns) */}
         <div className="lg:col-span-2 p-5 rounded-2xl bg-card border border-border/80 shadow-xs">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h2 className="text-base font-semibold">Active Appliance Controls</h2>
+              <h2 className="text-base font-semibold">Switch Appliances On or Off</h2>
               <p className="text-xs text-muted-foreground">
-                Toggle high-load devices on or off to optimize current demand
+                These switches update the app. They control real appliances only when connected hardware is set up.
               </p>
             </div>
             <span className="text-xs px-2.5 py-1 rounded-full bg-secondary text-secondary-foreground font-medium">
-              {stats.active_appliances} running
+              {stats.active_appliances} switched on
             </span>
           </div>
 
@@ -576,32 +576,32 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* AI Optimization Suggestions (1 column) */}
+        {/* Saving suggestions (1 column) */}
         <div className="p-5 rounded-2xl bg-card border border-border/80 shadow-xs flex flex-col justify-between">
           <div>
             <div className="flex items-center gap-2 mb-3">
               <Sparkles className="w-4 h-4 text-primary" />
-              <h2 className="text-base font-semibold">Energy Recommendations</h2>
+              <h2 className="text-base font-semibold">Small changes for a lighter bill</h2>
             </div>
             <p className="text-xs text-muted-foreground mb-4">
-              Real-time actionable adjustments to slash monthly electricity bills
+              In Kerala, sunny hours can be useful for flexible jobs like washing. Your savings depend on your home.
             </p>
 
             <div className="space-y-3">
               <div className="p-3 rounded-xl bg-primary/10 border border-primary/20 text-xs">
-                <div className="font-semibold text-primary mb-1">Shift Washing Machine</div>
+                <div className="font-semibold text-primary mb-1">Let the sun help with laundry</div>
                 <p className="text-muted-foreground">
-                  Running your washing cycle between 11:00 AM and 2:00 PM utilizes free rooftop solar power instead of grid tariff.
+                  If your solar panels are producing power, running the washing machine between 11 AM and 2 PM may use more solar electricity.
                 </p>
-                <div className="mt-2 text-emerald-500 font-medium">Estimated saving: ₹180 / month</div>
+                <div className="mt-2 text-emerald-500 font-medium">Possible saving varies by home</div>
               </div>
 
               <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs">
-                <div className="font-semibold text-amber-500 mb-1">Pre-cool Living Space</div>
+                <div className="font-semibold text-amber-500 mb-1">Get ahead of the afternoon heat</div>
                 <p className="text-muted-foreground">
-                  Cool rooms to 23°C at 5:00 PM before peak hours begin (6 PM) to reduce evening compressor strain.
+                  If you use an AC, cooling the room before evening may help avoid running it as hard later.
                 </p>
-                <div className="mt-2 text-amber-500 font-medium">Estimated saving: ₹240 / month</div>
+                <div className="mt-2 text-amber-500 font-medium">Possible saving varies by home</div>
               </div>
             </div>
           </div>
@@ -610,7 +610,7 @@ export default function DashboardPage() {
             href="/scheduler"
             className="mt-4 w-full py-2.5 px-3 rounded-xl bg-secondary text-secondary-foreground text-xs font-semibold flex items-center justify-center gap-1.5 hover:bg-secondary/80 transition-colors"
           >
-            Apply Smart Schedule
+            View appliance timings
             <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>

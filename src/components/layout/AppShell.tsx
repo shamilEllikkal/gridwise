@@ -26,11 +26,9 @@ function ShellInner({ children }: AppShellProps) {
 
       {/* Main content area */}
       <motion.div
-        animate={{
-          marginLeft: sidebarExpanded ? "260px" : "72px",
-        }}
         transition={{ type: "spring", stiffness: 300, damping: 30 }}
-        className="flex flex-col min-h-screen md:ml-[72px]"
+        style={{ "--desktop-sidebar-width": sidebarExpanded ? "260px" : "72px" } as React.CSSProperties}
+        className="flex flex-col min-h-screen ml-0 transition-[margin] duration-300 md:ml-[var(--desktop-sidebar-width)]"
       >
         {/* Top navigation */}
         <TopNav onMenuClick={() => setMobileOpen(true)} sidebarExpanded={sidebarExpanded} />

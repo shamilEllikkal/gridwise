@@ -3,7 +3,7 @@ import type { ApplianceCategory } from "@/types";
 // ─── App Constants ──────────────────────────────────────────
 
 export const APP_NAME = "GRIDWISE";
-export const APP_TAGLINE = "Monitor every unit. Understand every appliance. Optimise every decision.";
+export const APP_TAGLINE = "Know what is using power. Make every unit count.";
 export const APP_VERSION = "1.0.0";
 export const DEMO_HOUSEHOLD_ID = "demo-household-001";
 export const DEMO_COMMUNITY_ID = "demo-community-001";
@@ -92,14 +92,14 @@ export const CHART_COLORS = [
 // ─── Navigation Items ───────────────────────────────────────
 
 export const NAV_ITEMS = [
-  { href: "/dashboard", label: "Dashboard", icon: "LayoutDashboard" },
+  { href: "/dashboard", label: "Home", icon: "LayoutDashboard" },
   { href: "/appliances", label: "Appliances", icon: "Plug" },
-  { href: "/analytics", label: "Analytics", icon: "BarChart3" },
-  { href: "/scheduler", label: "Smart Scheduler", icon: "CalendarClock" },
-  { href: "/community", label: "Community", icon: "Users" },
-  { href: "/simulator", label: "Peak Simulator", icon: "Activity" },
-  { href: "/solar", label: "Solar Energy", icon: "Sun" },
-  { href: "/reports", label: "Reports", icon: "FileText" },
+  { href: "/analytics", label: "Usage & Bill", icon: "BarChart3" },
+  { href: "/scheduler", label: "Appliance Timings", icon: "CalendarClock" },
+  { href: "/community", label: "Neighbourhood", icon: "Users" },
+  { href: "/simulator", label: "What If?", icon: "Activity" },
+  { href: "/solar", label: "Solar", icon: "Sun" },
+  { href: "/reports", label: "Monthly Report", icon: "FileText" },
   { href: "/settings", label: "Settings", icon: "Settings" },
 ] as const;
 
@@ -108,8 +108,8 @@ export const NAV_ITEMS = [
 export const SIMULATION_PRESETS = [
   {
     id: "normal",
-    label: "Normal Household",
-    description: "Typical daily consumption pattern",
+    label: "Everyday home",
+    description: "A sample day of electricity use at home",
     config: {
       num_households: 50,
       num_ac_units: 1,
@@ -128,8 +128,8 @@ export const SIMULATION_PRESETS = [
   },
   {
     id: "evening_peak",
-    label: "Evening Peak",
-    description: "High demand during evening hours",
+    label: "Busy evening",
+    description: "Many homes using appliances at the same evening time",
     config: {
       num_households: 100,
       num_ac_units: 2,
@@ -148,8 +148,8 @@ export const SIMULATION_PRESETS = [
   },
   {
     id: "coordinated",
-    label: "Coordinated Community",
-    description: "Smart coordination across households",
+    label: "Homes taking turns",
+    description: "Homes take turns using flexible appliances",
     config: {
       num_households: 200,
       num_ac_units: 1,
@@ -168,8 +168,8 @@ export const SIMULATION_PRESETS = [
   },
   {
     id: "solar_assisted",
-    label: "Solar-Assisted",
-    description: "With rooftop solar during peak hours",
+    label: "Sunny Day",
+    description: "More appliance use during daytime solar hours",
     config: {
       num_households: 75,
       num_ac_units: 1,

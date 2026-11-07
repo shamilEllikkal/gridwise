@@ -6,19 +6,19 @@ import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: {
-    default: "GRIDWISE — Smart Electricity Monitoring",
+    default: "GRIDWISE — Electricity use made clear",
     template: "%s | GRIDWISE",
   },
   description:
-    "Monitor every unit. Understand every appliance. Optimise every decision. GRIDWISE is your intelligent electricity monitoring and energy management platform.",
+    "Understand your home's electricity use, appliances, solar power and estimated bill with GRIDWISE.",
   keywords: ["electricity monitoring", "energy management", "smart home", "power consumption", "GRIDWISE"],
   authors: [{ name: "TERRACODE" }],
   creator: "TERRACODE",
   openGraph: {
     type: "website",
     locale: "en_US",
-    title: "GRIDWISE — Smart Electricity Monitoring",
-    description: "Monitor every unit. Understand every appliance. Optimise every decision.",
+    title: "GRIDWISE — Electricity use made clear",
+    description: "Understand your home's electricity use, appliances, solar power and estimated bill.",
     siteName: "GRIDWISE",
   },
 };

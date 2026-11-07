@@ -165,9 +165,9 @@ export default function AppliancesPage() {
       {/* Header and Summary Bar */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">Appliance Inventory</h1>
+          <h1 className="text-2xl font-bold tracking-tight">Your Appliances</h1>
           <p className="text-xs text-muted-foreground mt-0.5">
-            Configure ratings, operating schedules, and monitor device-level power draw
+            Add appliances and enter how much power they use and how long they run.
           </p>
         </div>
 
@@ -176,14 +176,14 @@ export default function AppliancesPage() {
           className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-sm transition-colors shadow-xs"
         >
           <Plus className="w-4 h-4" />
-          <span>Add Appliance</span>
+          <span>Add an appliance</span>
         </button>
       </div>
 
       {/* Aggregate Stats Bar */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="p-4 rounded-xl bg-card border border-border/80 shadow-xs">
-          <span className="text-xs text-muted-foreground uppercase font-medium">Total Connected Load</span>
+          <span className="text-xs text-muted-foreground uppercase font-medium">Power if all are on</span>
           <div className="text-2xl font-bold tabular-nums mt-1 text-foreground">
             {formatPower(totalConnectedWatts)}
           </div>
@@ -193,7 +193,7 @@ export default function AppliancesPage() {
         </div>
 
         <div className="p-4 rounded-xl bg-card border border-border/80 shadow-xs">
-          <span className="text-xs text-muted-foreground uppercase font-medium">Estimated Daily Demand</span>
+          <span className="text-xs text-muted-foreground uppercase font-medium">Estimated daily use</span>
           <div className="text-2xl font-bold tabular-nums mt-1 text-emerald-500">
             {formatKwh(totalDailyKwh)}
           </div>
@@ -203,7 +203,7 @@ export default function AppliancesPage() {
         </div>
 
         <div className="p-4 rounded-xl bg-card border border-border/80 shadow-xs">
-          <span className="text-xs text-muted-foreground uppercase font-medium">Monthly Cost Impact</span>
+          <span className="text-xs text-muted-foreground uppercase font-medium">Estimated monthly cost</span>
           <div className="text-2xl font-bold tabular-nums mt-1 text-foreground">
             {formatCurrency(totalMonthlyCost)}
           </div>
@@ -214,7 +214,7 @@ export default function AppliancesPage() {
       </div>
 
       {/* Filters & Search */}
-      <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
+      <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 min-w-0">
         {/* Search */}
         <div className="relative flex-1 max-w-md">
           <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground" />
@@ -222,13 +222,13 @@ export default function AppliancesPage() {
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Search appliances by name..."
+            placeholder="Search your appliances..."
             className="w-full pl-10 pr-4 py-2 rounded-xl bg-card border border-border/80 text-sm focus:outline-hidden focus:ring-2 focus:ring-primary/40"
           />
         </div>
 
         {/* Status Filters */}
-        <div className="flex items-center gap-1.5 p-1 rounded-xl bg-muted/60 border border-border/80 self-start md:self-auto">
+        <div className="flex items-center gap-1.5 p-1 rounded-xl bg-muted/60 border border-border/80 self-start md:self-auto max-w-full">
           {(["all", "on", "off"] as const).map((status) => (
             <button
               key={status}
@@ -507,9 +507,9 @@ export default function AppliancesPage() {
                       }
                       className="w-full px-3 py-2 rounded-xl bg-card border border-border text-xs focus:outline-hidden"
                     >
-                      <option value="flexible">Flexible (Can shift off-peak)</option>
-                      <option value="essential">Essential (Cannot shift)</option>
-                      <option value="scheduled">Scheduled (Fixed timer)</option>
+                      <option value="flexible">Flexible (timing can change)</option>
+                      <option value="essential">Essential (keep this timing)</option>
+                      <option value="scheduled">Set timing (fixed)</option>
                     </select>
                   </div>
                 </div>
@@ -636,7 +636,7 @@ export default function AppliancesPage() {
                     type="submit"
                     className="px-5 py-2 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground font-semibold transition-colors"
                   >
-                    {editingAppliance ? "Save Changes" : "Add Appliance"}
+                    {editingAppliance ? "Save changes" : "Add appliance"}
                   </button>
                 </div>
               </form>

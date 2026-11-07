@@ -56,9 +56,9 @@ export default function AnalyticsPage() {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">Energy Analytics</h1>
+          <h1 className="text-2xl font-bold tracking-tight">Electricity Use & Bill</h1>
           <p className="text-xs text-muted-foreground mt-0.5">
-            Historical consumption patterns, tariff slab progression, and peak demand audits
+            Check how much electricity your home uses and how the estimated bill changes.
           </p>
         </div>
 
@@ -89,7 +89,7 @@ export default function AnalyticsPage() {
               <Layers className="w-4 h-4" />
             </div>
             <div>
-              <h2 className="text-base font-semibold">KSEB Tiered Tariff Slabs</h2>
+              <h2 className="text-base font-semibold">Estimated cost by monthly units</h2>
               <p className="text-xs text-muted-foreground">
                 Current month: <strong>{stats.total_month_kwh} Units</strong> · Projected Bill:{" "}
                 <strong>{formatCurrency(stats.estimated_month_bill)}</strong>
@@ -97,7 +97,7 @@ export default function AnalyticsPage() {
             </div>
           </div>
           <span className="text-xs text-muted-foreground font-mono">
-            Domestic Telescopic Tariff
+            KSEB-style estimate
           </span>
         </div>
 
@@ -153,7 +153,7 @@ export default function AnalyticsPage() {
             </h2>
             <p className="text-xs text-muted-foreground">
               {period === "day"
-                ? "Hourly electricity consumption in kilowatt-hours (kWh)"
+                ? "Estimated electricity used each hour (units)"
                 : period === "week"
                 ? "Energy units and daily cost over the past week"
                 : "Six-month seasonal demand variance"}
@@ -250,10 +250,10 @@ export default function AnalyticsPage() {
           <div>
             <div className="flex items-center gap-2 mb-3">
               <Clock className="w-4 h-4 text-amber-500" />
-              <h2 className="text-base font-semibold">Peak Demand Audit</h2>
+              <h2 className="text-base font-semibold">Use During Evening Busy Hours</h2>
             </div>
             <p className="text-xs text-muted-foreground mb-4">
-              Electricity consumed during high-demand hours (18:00–22:00) vs off-peak hours
+              Estimated electricity used from 6–10 PM compared with the rest of the day.
             </p>
 
             <div className="space-y-4">
@@ -262,7 +262,7 @@ export default function AnalyticsPage() {
                 <div className="flex items-center justify-between text-xs mb-1.5">
                   <span className="font-semibold text-amber-500 flex items-center gap-1.5">
                     <span className="w-2 h-2 rounded-full bg-amber-500" />
-                    Peak Hours (6 PM – 10 PM)
+                    Evening busy hours (6–10 PM)
                   </span>
                   <span className="font-mono tabular-nums font-semibold">
                     {formatKwh(peakUnits)} ({Math.round(peakRatio)}%)
@@ -281,7 +281,7 @@ export default function AnalyticsPage() {
                 <div className="flex items-center justify-between text-xs mb-1.5">
                   <span className="font-semibold text-emerald-500 flex items-center gap-1.5">
                     <span className="w-2 h-2 rounded-full bg-emerald-500" />
-                    Off-Peak Hours
+                    Other hours
                   </span>
                   <span className="font-mono tabular-nums font-semibold">
                     {formatKwh(offPeakUnits)} ({Math.round(100 - peakRatio)}%)
@@ -299,21 +299,21 @@ export default function AnalyticsPage() {
             <div className="mt-6 p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-600 dark:text-amber-400">
               <div className="font-semibold mb-1 flex items-center gap-1">
                 <AlertTriangle className="w-3.5 h-3.5" />
-                Shift Opportunity
+                Possible change
               </div>
-              Shifting 30% of your flexible peak consumption ({formatKwh(peakUnits * 0.3)}) to daytime solar hours saves approx{" "}
-              <strong>₹{Math.round(peakUnits * 0.3 * 30 * state.household.tariff_rate)} / month</strong>.
+              If you can move some flexible use ({formatKwh(peakUnits * 0.3)}) to sunny daytime hours, the estimated saving is{" "}
+              <strong>₹{Math.round(peakUnits * 0.3 * 30 * state.household.tariff_rate)} / month (rough estimate)</strong>.
             </div>
           </div>
         </div>
 
-        {/* Top Energy Guzzlers (2 columns) */}
+        {/* Appliances Using the Most Electricity (2 columns) */}
         <div className="lg:col-span-2 p-5 rounded-2xl bg-card border border-border/80 shadow-xs">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h2 className="text-base font-semibold">Highest Energy Consumers</h2>
+              <h2 className="text-base font-semibold">Appliances Using the Most Electricity</h2>
               <p className="text-xs text-muted-foreground">
-                Ranked by estimated monthly kWh consumption and cost contribution
+                Sorted by estimated monthly units and cost
               </p>
             </div>
             <span className="text-xs text-muted-foreground font-mono">
@@ -347,7 +347,7 @@ export default function AnalyticsPage() {
 
                     <div className="text-right">
                       <span className="font-bold text-foreground tabular-nums">
-                        {Math.round(appliance.monthly_kwh)} kWh/mo
+                        {Math.round(appliance.monthly_kwh)} units/month
                       </span>
                       <span className="text-muted-foreground text-[11px] block">
                         {formatCurrency(appliance.monthly_cost)}

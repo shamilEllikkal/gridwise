@@ -79,9 +79,9 @@ export default function SettingsPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">System Configuration</h1>
+          <h1 className="text-2xl font-bold tracking-tight">Household Settings</h1>
           <p className="text-xs text-muted-foreground mt-0.5">
-            Manage household metadata, connection limits, solar capacities, and theme preferences
+            Update your home details, solar setup and how the app looks.
           </p>
         </div>
 
@@ -101,9 +101,9 @@ export default function SettingsPage() {
             <Home className="w-4 h-4" />
           </div>
           <div>
-            <h2 className="text-base font-semibold">Household Profile</h2>
+            <h2 className="text-base font-semibold">Home Details</h2>
             <p className="text-xs text-muted-foreground">
-              Physical property attributes and utility billing rates
+              Your home information and electricity rate.
             </p>
           </div>
         </div>
@@ -141,7 +141,7 @@ export default function SettingsPage() {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 min-[420px]:grid-cols-2 sm:grid-cols-4 gap-4">
             <div>
               <label className="block font-medium text-foreground mb-1">
                 Area (Sq Ft)
@@ -236,7 +236,7 @@ export default function SettingsPage() {
             <Sun className="w-4 h-4" />
           </div>
           <div>
-            <h2 className="text-base font-semibold">Rooftop Solar Plant</h2>
+            <h2 className="text-base font-semibold">Solar Setup</h2>
             <p className="text-xs text-muted-foreground">
               PV generator capacity and battery energy storage limits
             </p>
@@ -244,7 +244,7 @@ export default function SettingsPage() {
         </div>
 
         <form onSubmit={handleSaveSolar} className="space-y-4 text-xs">
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 min-[420px]:grid-cols-2 sm:grid-cols-4 gap-4">
             <div>
               <label className="block font-medium text-foreground mb-1">
                 Capacity (kWp)

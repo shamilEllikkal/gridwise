@@ -67,9 +67,9 @@ export default function SimulatorPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">Peak Demand Simulator</h1>
+          <h1 className="text-2xl font-bold tracking-tight">What If the Neighbourhood Used Power at Different Times?</h1>
           <p className="text-xs text-muted-foreground mt-0.5">
-            Model community-scale load shifting, peak shaving, and transformer stress relief
+            Explore a familiar Kerala evening: adjust homes, pumps, ACs and washing machines to see how the shared demand could change. These are estimates.
           </p>
         </div>
 
@@ -97,7 +97,7 @@ export default function SimulatorPage() {
         {/* Stat 1: Peak Demand Reduction */}
         <div className="p-5 rounded-2xl bg-card border border-border/80 shadow-xs">
           <span className="text-xs font-medium text-muted-foreground uppercase">
-            Peak Load Shaved
+            Evening use reduced by
           </span>
           <div className="text-3xl font-bold tabular-nums text-emerald-500 mt-1">
             {result.peak_reduction_kw.toFixed(1)} kW
@@ -105,7 +105,7 @@ export default function SimulatorPage() {
           <div className="mt-2 text-xs text-muted-foreground flex items-center gap-1">
             <TrendingDown className="w-3.5 h-3.5 text-emerald-500" />
             <span>
-              <strong>{result.peak_reduction_percent.toFixed(1)}% reduction</strong> vs uncoordinated
+              <strong>{result.peak_reduction_percent.toFixed(1)}% less</strong> than everyone using appliances at once
             </span>
           </div>
         </div>
@@ -113,7 +113,7 @@ export default function SimulatorPage() {
         {/* Stat 2: Peak Demand (Before vs After) */}
         <div className="p-5 rounded-2xl bg-card border border-border/80 shadow-xs">
           <span className="text-xs font-medium text-muted-foreground uppercase">
-            Peak Demand
+            Highest evening use
           </span>
           <div className="text-3xl font-bold tabular-nums text-foreground mt-1">
             {result.optimised_peak_kw.toFixed(1)} kW
@@ -129,26 +129,26 @@ export default function SimulatorPage() {
         {/* Stat 3: Grid Stress Index */}
         <div className="p-5 rounded-2xl bg-card border border-border/80 shadow-xs">
           <span className="text-xs font-medium text-muted-foreground uppercase">
-            Shaved Energy
+            Electricity moved to another time
           </span>
           <div className="text-3xl font-bold tabular-nums text-foreground mt-1">
             {result.total_flexible_kwh.toFixed(1)} kWh
           </div>
           <div className="mt-2 text-xs text-muted-foreground">
-            Shifted to off-peak / solar generation hours
+            Moved to other hours or sunny hours (estimate)
           </div>
         </div>
 
         {/* Stat 4: Estimated Community Savings */}
         <div className="p-5 rounded-2xl bg-card border border-border/80 shadow-xs">
           <span className="text-xs font-medium text-muted-foreground uppercase">
-            Estimated Community Savings
+            Possible savings for all homes
           </span>
           <div className="text-3xl font-bold tabular-nums text-foreground mt-1">
             {formatCurrency(estimatedMonthlySavings)}
           </div>
           <div className="mt-2 text-xs text-muted-foreground">
-            For {config.num_households} connected households
+              Across {config.num_households} homes (estimate)
           </div>
         </div>
       </div>
@@ -157,9 +157,9 @@ export default function SimulatorPage() {
       <div className="p-5 rounded-2xl bg-card border border-border/80 shadow-xs">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
           <div>
-            <h2 className="text-base font-semibold">Community Demand Profile Comparison</h2>
+            <h2 className="text-base font-semibold">Estimated Electricity Use Through the Day</h2>
             <p className="text-xs text-muted-foreground">
-              Uncoordinated Baseline (Red) vs Smart Coordinated Load Shifting (Green)
+              Red: appliances used at the same time. Green: some use moved to other hours.
             </p>
           </div>
           <div className="flex items-center gap-4 text-xs">
@@ -253,7 +253,7 @@ export default function SimulatorPage() {
           {/* Slider 2: Flexible Load Shift % */}
           <div>
             <div className="flex justify-between font-semibold mb-2">
-              <span>Flexible Load Shift (%)</span>
+              <span>Appliance use moved to other hours</span>
               <span className="text-emerald-500 font-mono">
                 {config.flexible_shift_percent}% shifted
               </span>

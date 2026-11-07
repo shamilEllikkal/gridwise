@@ -30,7 +30,7 @@ const LEADERBOARD: LeaderboardMember[] = [
     score: 96,
     peakReduction: 68,
     monthlyKwh: 142,
-    badge: "Solar Pioneer",
+    badge: "Daytime Solar User",
   },
   {
     rank: 2,
@@ -39,7 +39,7 @@ const LEADERBOARD: LeaderboardMember[] = [
     score: 92,
     peakReduction: 54,
     monthlyKwh: 184,
-    badge: "Peak Shaver",
+    badge: "Evening Use Moved",
   },
   {
     rank: 3,
@@ -48,7 +48,7 @@ const LEADERBOARD: LeaderboardMember[] = [
     score: 89,
     peakReduction: 48,
     monthlyKwh: 198,
-    badge: "Energy Champion",
+    badge: "Steady Saver",
   },
   {
     rank: 4,
@@ -57,7 +57,7 @@ const LEADERBOARD: LeaderboardMember[] = [
     score: 84,
     peakReduction: 41,
     monthlyKwh: 220,
-    badge: "Eco Supporter",
+    badge: "Lower Evening Use",
   },
   {
     rank: 5,
@@ -66,7 +66,7 @@ const LEADERBOARD: LeaderboardMember[] = [
     score: 79,
     peakReduction: 33,
     monthlyKwh: 265,
-    badge: "Consistent",
+    badge: "Regular User",
   },
   {
     rank: 6,
@@ -75,7 +75,7 @@ const LEADERBOARD: LeaderboardMember[] = [
     score: 74,
     peakReduction: 25,
     monthlyKwh: 290,
-    badge: "Improving",
+    badge: "Making Changes",
   },
 ];
 
@@ -90,11 +90,11 @@ export default function CommunityPage() {
   const handlePledge = () => {
     setPledged((prev) => !prev);
     if (!pledged) {
-      toast.success("Challenge Pledged!", {
-        description: "You've committed to keeping ACs at 24°C and deferring laundry between 6-8 PM.",
+      toast.success("You joined the example challenge", {
+        description: "This sample pledge suggests keeping the AC at 24°C and running laundry outside 6–8 PM.",
       });
     } else {
-      toast.info("Pledge withdrawn.");
+      toast.info("Example pledge removed.");
     }
   };
 
@@ -103,9 +103,9 @@ export default function CommunityPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">Community Microgrid</h1>
+          <h1 className="text-2xl font-bold tracking-tight">Neighbourhood Electricity Use</h1>
           <p className="text-xs text-muted-foreground mt-0.5">
-            Peer benchmarking, feeder load balancing, and neighbourhood demand reduction
+            Sample figures showing how homes in a neighbourhood might use electricity together.
           </p>
         </div>
 
@@ -122,13 +122,13 @@ export default function CommunityPage() {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
           <div>
             <div className="flex items-center gap-2">
-              <h2 className="text-base font-semibold">Distribution Transformer Status</h2>
+              <h2 className="text-base font-semibold">Neighbourhood Electricity Supply</h2>
               <span className="px-2 py-0.5 text-[11px] font-medium rounded-full bg-emerald-500/15 text-emerald-500 border border-emerald-500/30">
                 Safe Margin
               </span>
             </div>
             <p className="text-xs text-muted-foreground">
-              Local Feeder: 250 kVA Step-Down Transformer · Sector 4, {community.location}
+              Example transformer capacity · {community.location}
             </p>
           </div>
           <div className="text-right">
@@ -155,7 +155,7 @@ export default function CommunityPage() {
           />
         </div>
 
-        <div className="mt-2 flex items-center justify-between text-[11px] text-muted-foreground">
+        <div className="mt-2 flex flex-wrap items-center justify-between gap-x-2 gap-y-1 text-[11px] text-muted-foreground">
           <span>0 kW</span>
           <span className="text-amber-500">80% Peak Threshold (200 kW)</span>
           <span>250 kW Limit</span>
@@ -167,13 +167,13 @@ export default function CommunityPage() {
         <div className="space-y-1.5 max-w-xl">
           <div className="flex items-center gap-2 text-xs font-bold text-primary uppercase tracking-wider">
             <Target className="w-4 h-4" />
-            <span>Evening Peak-Shave Challenge</span>
+            <span>Evening Electricity Saving Challenge</span>
           </div>
           <h3 className="text-lg font-bold text-foreground">
-            Target: Shave 40 kW Between 18:00 – 20:00 Tonight
+            Goal: Use 40 kW less between 6–8 PM
           </h3>
           <p className="text-xs text-muted-foreground">
-            32 out of 48 households in Greenfield have pledged. If met, the community avoids ₹14,500 in surcharge penalties from KSEB.
+            Sample challenge figures for demonstration. Actual neighbourhood participation and savings are not connected.
           </p>
 
           <div className="pt-2">
@@ -207,26 +207,26 @@ export default function CommunityPage() {
           ) : (
             <>
               <Zap className="w-4 h-4" />
-              <span>Join Challenge (Pledge 1.5 kW)</span>
+            <span>Join example challenge</span>
             </>
           )}
         </button>
       </div>
 
       {/* Neighbourhood Leaderboard */}
-      <div className="p-5 rounded-2xl bg-card border border-border/80 shadow-xs">
+      <div className="p-5 rounded-2xl bg-card border border-border/80 shadow-xs overflow-hidden">
         <div className="flex items-center justify-between mb-4">
           <div>
             <div className="flex items-center gap-2">
               <Trophy className="w-4 h-4 text-amber-500" />
-              <h2 className="text-base font-semibold">Community Energy Leaderboard</h2>
+              <h2 className="text-base font-semibold">Example Neighbourhood Results</h2>
             </div>
             <p className="text-xs text-muted-foreground">
-              Ranked by efficiency score and percentage of load successfully shifted off-peak
+              Sample households ranked by estimated electricity use moved away from evening hours.
             </p>
           </div>
           <span className="text-xs text-muted-foreground font-mono">
-            Month: November 2026
+            Example data
           </span>
         </div>
 
@@ -262,7 +262,7 @@ export default function CommunityPage() {
                     <span className="text-sm text-foreground">{member.name}</span>
                     {member.isCurrentUser && (
                       <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-primary text-primary-foreground">
-                        YOU
+                        Your home (example)
                       </span>
                     )}
                   </div>
@@ -274,9 +274,9 @@ export default function CommunityPage() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-4 text-right self-end sm:self-auto text-xs">
+              <div className="flex items-center gap-4 text-right self-start sm:self-auto text-xs">
                 <div>
-                  <div className="text-muted-foreground text-[10px] uppercase">Peak Shifted</div>
+                  <div className="text-muted-foreground text-[10px] uppercase">Evening use moved</div>
                   <div className="font-bold text-emerald-500 tabular-nums">
                     {member.peakReduction}%
                   </div>

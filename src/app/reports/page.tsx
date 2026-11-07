@@ -58,7 +58,7 @@ export default function ReportsPage() {
   };
 
   const handleExportCsv = () => {
-    const headers = "Appliance,Category,Watts,Quantity,Daily Hours,Monthly Units (kWh),Monthly Cost (INR)\n";
+    const headers = "Appliance,Category,Watts,Quantity,Daily Hours,Units per month (kWh),Monthly Cost (INR)\n";
     const rows = enrichedAppliances
       .map(
         (a: ApplianceWithStats) =>
@@ -81,9 +81,9 @@ export default function ReportsPage() {
       {/* Header / Actions */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 print:hidden">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">Monthly Energy Audit Report</h1>
+          <h1 className="text-2xl font-bold tracking-tight">Monthly Electricity Report</h1>
           <p className="text-xs text-muted-foreground mt-0.5">
-            Official tariff breakdown, appliance consumption ledger, and ESG compliance summary
+            A summary of your estimated electricity use and bill. Your KSEB bill may differ.
           </p>
         </div>
 
@@ -93,14 +93,14 @@ export default function ReportsPage() {
             className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-card border border-border/80 hover:bg-muted text-foreground text-xs font-semibold transition-colors"
           >
             <Download className="w-3.5 h-3.5" />
-            <span>Export CSV</span>
+            <span>Download table (CSV)</span>
           </button>
           <button
             onClick={handlePrint}
             className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-bold transition-colors shadow-xs"
           >
             <Printer className="w-3.5 h-3.5" />
-            <span>Print / Save PDF</span>
+            <span>Print or save as PDF</span>
           </button>
         </div>
       </div>
@@ -118,11 +118,11 @@ export default function ReportsPage() {
                 <Zap className="w-4 h-4" />
               </div>
               <span className="text-lg font-bold tracking-tight">
-                GRID<span className="text-primary">WISE</span> ENERGY AUDIT
+                GRID<span className="text-primary">WISE</span> MONTHLY REPORT
               </span>
             </div>
             <p className="text-xs text-muted-foreground mt-1">
-              Autonomous Energy Telemetry & Tariff Ledger
+              Estimated electricity use and bill
             </p>
           </div>
 
@@ -189,17 +189,17 @@ export default function ReportsPage() {
         <div className="space-y-3">
           <h3 className="text-sm font-bold text-foreground flex items-center gap-2">
             <Layers className="w-4 h-4 text-primary" />
-            Telescopic Tariff Slab Calculation
+            Estimated electricity cost by units
           </h3>
 
-          <div className="border border-border/80 rounded-xl overflow-hidden text-xs">
-            <table className="w-full text-left border-collapse">
+          <div className="border border-border/80 rounded-xl overflow-x-auto text-xs">
+            <table className="w-full min-w-[620px] text-left border-collapse">
               <thead className="bg-muted/50 border-b border-border/80 text-muted-foreground font-semibold">
                 <tr>
-                  <th className="py-2.5 px-4">Slab Tier</th>
-                  <th className="py-2.5 px-4">Consumption Band</th>
-                  <th className="py-2.5 px-4 text-right">Units Billed</th>
-                  <th className="py-2.5 px-4 text-right">Rate / Unit</th>
+                  <th className="py-2.5 px-4">Rate range</th>
+                  <th className="py-2.5 px-4">Units in range</th>
+                  <th className="py-2.5 px-4 text-right">Units counted</th>
+                  <th className="py-2.5 px-4 text-right">Cost per unit</th>
                   <th className="py-2.5 px-4 text-right">Amount</th>
                 </tr>
               </thead>
@@ -220,11 +220,11 @@ export default function ReportsPage() {
                   <td className="py-2 px-4 text-right tabular-nums font-mono">{formatCurrency(fixedCharge)}</td>
                 </tr>
                 <tr className="bg-muted/20">
-                  <td colSpan={4} className="py-2 px-4 text-muted-foreground">Electricity Duty (10%)</td>
+                  <td colSpan={4} className="py-2 px-4 text-muted-foreground">Electricity duty (estimated)</td>
                   <td className="py-2 px-4 text-right tabular-nums font-mono">{formatCurrency(duty)}</td>
                 </tr>
                 <tr className="bg-primary/5 font-bold border-t border-border">
-                  <td colSpan={4} className="py-3 px-4 text-foreground">Total Gross Electricity Charges</td>
+                  <td colSpan={4} className="py-3 px-4 text-foreground">Estimated total before solar credit</td>
                   <td className="py-3 px-4 text-right text-foreground font-mono text-sm">
                     {formatCurrency(grossPayable)}
                   </td>
@@ -238,18 +238,18 @@ export default function ReportsPage() {
         <div className="space-y-3">
           <h3 className="text-sm font-bold text-foreground flex items-center gap-2">
             <Zap className="w-4 h-4 text-primary" />
-            Appliance Inventory Consumption Breakdown
+            Estimated use by appliance
           </h3>
 
-          <div className="border border-border/80 rounded-xl overflow-hidden text-xs">
-            <table className="w-full text-left border-collapse">
+          <div className="border border-border/80 rounded-xl overflow-x-auto text-xs">
+            <table className="w-full min-w-[620px] text-left border-collapse">
               <thead className="bg-muted/50 border-b border-border/80 text-muted-foreground font-semibold">
                 <tr>
                   <th className="py-2.5 px-4">Appliance</th>
                   <th className="py-2.5 px-4">Category</th>
-                  <th className="py-2.5 px-4 text-right">Rated Load</th>
-                  <th className="py-2.5 px-4 text-right">Daily Hrs</th>
-                  <th className="py-2.5 px-4 text-right">Monthly Units</th>
+                  <th className="py-2.5 px-4 text-right">Power</th>
+                  <th className="py-2.5 px-4 text-right">Hours per day</th>
+                  <th className="py-2.5 px-4 text-right">Units per month</th>
                   <th className="py-2.5 px-4 text-right">Cost (₹)</th>
                 </tr>
               </thead>
@@ -277,19 +277,19 @@ export default function ReportsPage() {
           </div>
         </div>
 
-        {/* ESG Certificate & Signature Footer */}
-        <div className="p-4 rounded-xl bg-muted/20 border border-border/60 flex items-center justify-between text-xs text-muted-foreground">
+        {/* Environmental estimate */}
+        <div className="p-4 rounded-xl bg-muted/20 border border-border/60 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-muted-foreground">
           <div className="flex items-center gap-3">
             <Leaf className="w-5 h-5 text-emerald-500" />
             <div>
-              <span className="font-semibold text-foreground">ESG Sustainability Certification:</span>
+              <span className="font-semibold text-foreground">Environmental estimate:</span>
               <p className="text-[11px]">
                 Clean energy generation avoided {Math.round(stats.total_month_kwh * CO2_PER_KWH * 0.4)} kg of CO2 equivalent this period.
               </p>
             </div>
           </div>
-          <div className="text-right text-[11px] font-mono">
-            Verified by GRIDWISE Telemetry Engine v1.0
+          <div className="text-left sm:text-right text-[11px] font-mono">
+            Calculated from the information entered in GRIDWISE
           </div>
         </div>
       </div>

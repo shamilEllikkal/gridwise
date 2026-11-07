@@ -31,9 +31,9 @@ export function TopNav({ onMenuClick, sidebarExpanded }: TopNavProps) {
 
   return (
     <motion.header
-      animate={{ left: sidebarExpanded ? "260px" : "72px" }}
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
-      className="fixed top-0 right-0 h-16 z-30 bg-background/80 backdrop-blur-xl border-b border-border/50 flex items-center px-4 md:px-6 gap-4 left-0 md:left-[72px]"
+      style={{ "--desktop-sidebar-width": sidebarExpanded ? "260px" : "72px" } as React.CSSProperties}
+      className="fixed top-0 right-0 h-16 z-30 bg-background/80 backdrop-blur-xl border-b border-border/50 flex items-center px-4 md:px-6 gap-4 left-0 transition-[left] duration-300 md:left-[var(--desktop-sidebar-width)]"
     >
       {/* Mobile menu button */}
       <button

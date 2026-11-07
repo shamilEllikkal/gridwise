@@ -62,16 +62,16 @@ export function SessionsPanel({ applianceNames }: { applianceNames: ApplianceMap
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
           <Activity className="w-4 h-4 text-primary" />
-          <h2 className="text-base font-semibold">Live Session Tracker</h2>
+          <h2 className="text-base font-semibold">Recent Appliance Use</h2>
         </div>
         <span className="text-xs text-muted-foreground">
-          {sessions.filter(s => !s.ended_at).length} active
+          {sessions.filter(s => !s.ended_at).length} running now
         </span>
       </div>
 
       {sessions.length === 0 ? (
         <p className="text-xs text-muted-foreground text-center py-6">
-          No sessions yet. Toggle an appliance to start tracking.
+          No appliance use recorded yet. Switch an appliance on to start tracking.
         </p>
       ) : (
         <div className="space-y-2 max-h-64 overflow-y-auto pr-1">
@@ -112,7 +112,7 @@ export function SessionsPanel({ applianceNames }: { applianceNames: ApplianceMap
                   </>
                 )}
                 {!s.ended_at && (
-                  <span className="text-primary font-semibold">Running</span>
+                  <span className="text-primary font-semibold">On now</span>
                 )}
               </div>
             </div>

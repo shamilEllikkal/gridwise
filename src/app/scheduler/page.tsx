@@ -38,7 +38,7 @@ export default function SchedulerPage() {
   const estimatedMonthlyShiftSavings =
     (peakWatts / 1000) * 2 * 30 * (state.household.tariff_rate * 0.4); // approx 40% differential/solar savings
 
-  // 1-Click AI Smart Shift
+  // Move flexible appliances to a daytime schedule
   const handleAutoOptimize = () => {
     // Shift flexible appliances to daytime solar hours (e.g. 11:00 or 14:00)
     let shiftedCount = 0;
@@ -56,8 +56,8 @@ export default function SchedulerPage() {
     });
 
     setIsOptimized(true);
-    toast.success("Optimal Schedule Applied!", {
-      description: `Shifted ${shiftedCount} flexible loads out of peak hours to peak solar window (11:00 - 13:00).`,
+    toast.success("Timings updated", {
+      description: `Moved ${shiftedCount} flexible appliances to 11 AM–1 PM.`,
     });
   };
 
@@ -69,7 +69,7 @@ export default function SchedulerPage() {
       }
     });
     setIsOptimized(false);
-    toast.info("Schedules restored to original timings");
+      toast.info("Timings restored");
   };
 
   const hoursArray = Array.from({ length: 24 }, (_, i) => i);
@@ -79,9 +79,9 @@ export default function SchedulerPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">Smart Appliance Scheduler</h1>
+            <h1 className="text-2xl font-bold tracking-tight">A Better Time to Run Appliances</h1>
           <p className="text-xs text-muted-foreground mt-0.5">
-            Automate load shifting from expensive evening peaks (18:00 - 22:00) into free daytime solar windows
+            Choose when flexible appliances run. Daytime may be a good choice if your solar panels are producing power.
           </p>
         </div>
 
@@ -100,13 +100,13 @@ export default function SchedulerPage() {
               className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-bold transition-all shadow-xs"
             >
               <Sparkles className="w-4 h-4" />
-              <span>1-Click AI Smart Shift</span>
+              <span>Set flexible appliances to daytime</span>
             </button>
           )}
         </div>
       </div>
 
-      {/* AI Recommendation Banner */}
+      {/* Timing suggestion */}
       <div
         className={cn(
           "p-5 rounded-2xl border transition-all flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-xs",
@@ -131,13 +131,13 @@ export default function SchedulerPage() {
           <div>
             <h3 className="text-sm font-bold text-foreground">
               {isOptimized
-                ? "Optimal Load Distribution Active"
-                : `${peakRunningAppliances.length} High-Load Devices Running During Peak Window`}
+                ? "Daytime timings applied"
+                : `${peakRunningAppliances.length} appliances are set for evening busy hours`}
             </h3>
             <p className="text-xs text-muted-foreground mt-1 max-w-2xl">
               {isOptimized
-                ? `Flexible appliances are scheduled during solar generation hours. Potential savings of approx ₹${Math.round(estimatedMonthlyShiftSavings)}/month unlocked.`
-                : `Appliances like washing machines and pumps are scheduled between 6 PM – 10 PM. Shifting them to 11 AM – 2 PM aligns demand with free solar generation.`}
+                ? `Flexible appliances are set for daytime. Possible monthly saving: about ₹${Math.round(estimatedMonthlyShiftSavings)}. This is an estimate.`
+                : `Washing machines and pumps can often be run during the day instead of 6–10 PM. Solar power is available only when your panels are producing.`}
             </p>
           </div>
         </div>
@@ -147,7 +147,7 @@ export default function SchedulerPage() {
             onClick={handleAutoOptimize}
             className="flex-shrink-0 px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold transition-colors flex items-center gap-1.5"
           >
-            Shift Flexible Loads Now
+            Move flexible appliances to daytime
             <ArrowRight className="w-3.5 h-3.5" />
           </button>
         )}
@@ -157,19 +157,19 @@ export default function SchedulerPage() {
       <div className="p-5 rounded-2xl bg-card border border-border/80 shadow-xs overflow-x-auto">
         <div className="flex items-center justify-between mb-4 min-w-[700px]">
           <div>
-            <h2 className="text-base font-semibold">24-Hour Operational Matrix</h2>
+            <h2 className="text-base font-semibold">Your appliance timetable</h2>
             <p className="text-xs text-muted-foreground">
-              Visual timetable of scheduled appliances across time zones
+              See the set timings for each appliance.
             </p>
           </div>
           <div className="flex items-center gap-4 text-xs">
             <span className="flex items-center gap-1.5">
               <span className="w-2.5 h-2.5 rounded-full bg-amber-500/30 border border-amber-500" />
-              Peak Window (18:00 - 22:00)
+              Evening busy hours (6–10 PM)
             </span>
             <span className="flex items-center gap-1.5">
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/30 border border-emerald-500" />
-              Solar Window (10:00 - 15:00)
+              Sunny hours (10 AM–3 PM)
             </span>
           </div>
         </div>
@@ -215,7 +215,7 @@ export default function SchedulerPage() {
                     <div className="text-[10px] text-muted-foreground flex items-center gap-1">
                       <span>{formatPower(appliance.rated_power_w * appliance.quantity)}</span>
                       <span>·</span>
-                      <span className="capitalize">{appliance.schedule_type}</span>
+                          <span className="capitalize">{appliance.schedule_type === "flexible" ? "timing can change" : appliance.schedule_type === "scheduled" ? "set timing" : "essential"}</span>
                     </div>
                   </div>
 
@@ -293,18 +293,18 @@ export default function SchedulerPage() {
                         : "bg-primary/20 text-primary"
                     )}
                   >
-                    {isPeak ? "Peak Time" : "Eco Time"}
+                    {isPeak ? "Evening" : "Other time"}
                   </span>
                 </div>
 
                 <div className="text-xs text-muted-foreground">
-                  Current Schedule:{" "}
+                    Set timing:{" "}
                   <strong className="text-foreground">
                     {appliance.schedule_start ?? "Not set"} – {appliance.schedule_end ?? "Not set"}
                   </strong>
                 </div>
                 <div className="text-[11px] text-muted-foreground mt-0.5">
-                  Rated Load: {formatPower(appliance.rated_power_w * appliance.quantity)}
+                  Power: {formatPower(appliance.rated_power_w * appliance.quantity)}
                 </div>
               </div>
 
@@ -323,7 +323,7 @@ export default function SchedulerPage() {
                   className="mt-3 w-full py-1.5 px-3 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-600 dark:text-amber-400 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors"
                 >
                   <Sun className="w-3.5 h-3.5" />
-                  Shift to Solar Hours (11 AM)
+                  Set to daytime (11 AM)
                 </button>
               )}
             </div>
