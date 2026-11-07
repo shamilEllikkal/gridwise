@@ -1,26 +1,149 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f0faf0;
+  --foreground: #17231b;
+  --card: #ffffff;
+  --card-foreground: #17231b;
+  --popover: #ffffff;
+  --popover-foreground: #17231b;
+  --primary: #15803d;
+  --primary-foreground: #f0fdf4;
+  --secondary: #dcfce7;
+  --secondary-foreground: #15803d;
+  --muted: #f0f5f0;
+  --muted-foreground: #718078;
+  --accent: #86efac;
+  --accent-foreground: #15803d;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: #e4ebe5;
+  --input: #e4ebe5;
+  --ring: #15803d;
+}
+
+.dark {
+  --background: #0d1510;
+  --foreground: #f0fdf4;
+  --card: #141f18;
+  --card-foreground: #f0fdf4;
+  --popover: #141f18;
+  --popover-foreground: #f0fdf4;
+  --primary: #22c55e;
+  --primary-foreground: #052e16;
+  --secondary: #1c2b21;
+  --secondary-foreground: #86efac;
+  --muted: #141f18;
+  --muted-foreground: #6b7f72;
+  --accent: #86efac;
+  --accent-foreground: #052e16;
+  --destructive: #ef4444;
+  --destructive-foreground: #f0fdf4;
+  --border: rgba(255, 255, 255, 0.08);
+  --input: #1c2b21;
+  --ring: #22c55e;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-energy-green: #22c55e;
+  --color-energy-green-dim: #16a34a;
+  --color-energy-mint: #86efac;
+  --color-energy-solar: #f59e0b;
+  --color-energy-grid: #60a5fa;
+  --color-energy-battery: #a78bfa;
+  --color-energy-load: #f97316;
+
+  --font-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+  border-color: var(--border);
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  min-height: 100vh;
+}
+
+/* Custom Utilities */
+.glow-green {
+  box-shadow: 0 0 24px rgba(34, 197, 94, 0.15), 0 0 8px rgba(34, 197, 94, 0.1);
+}
+.glow-green-sm {
+  box-shadow: 0 0 12px rgba(34, 197, 94, 0.25);
+}
+.glow-amber {
+  box-shadow: 0 0 24px rgba(245, 158, 11, 0.15);
+}
+.glow-red {
+  box-shadow: 0 0 24px rgba(239, 68, 68, 0.15);
+}
+
+.glass {
+  background: rgba(20, 31, 24, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #22c55e 0%, #86efac 50%, #4ade80 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* 24-column grid for the scheduler timeline matrix */
+.grid-cols-24 {
+  grid-template-columns: repeat(24, minmax(0, 1fr));
+}
+
+/* Hide scrollbar while keeping scroll functionality */
+.scrollbar-none {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* Energy pulse animation used in TopNav demo badge */
+@keyframes energy-pulse-anim {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+.energy-pulse {
+  animation: energy-pulse-anim 2s ease-in-out infinite;
 }
