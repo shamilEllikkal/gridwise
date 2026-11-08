@@ -9,6 +9,7 @@ import {
   Database,
   Home,
   Plug,
+  Radio,
   Sun,
   Wifi,
   Zap,
@@ -113,6 +114,24 @@ Content-Type: application/json
 }`}</code></pre>
           <p className="mt-3 text-xs leading-5 text-muted-foreground">Send <code className="rounded bg-muted px-1 py-0.5">event_type: &quot;off&quot;</code> when it turns off. GRIDWISE records the event and updates the appliance session.</p>
         </div>
+      </section>
+
+      <section className="rounded-2xl border border-border/80 bg-card p-5 shadow-xs sm:p-7">
+        <div className="flex items-start gap-3">
+          <Radio className="mt-1 h-5 w-5 shrink-0 text-primary" />
+          <div className="max-w-3xl">
+            <h2 className="text-xl font-bold">Remote control</h2>
+            <p className="mt-2 text-sm leading-6 text-muted-foreground">Forgot to turn off a light after leaving home, or want to switch one on before you arrive? Remote control lets you manage connected home appliances from your phone, wherever you are. The controls here show how it could work.</p>
+          </div>
+        </div>
+        <div className="mt-5 grid gap-3 sm:grid-cols-3">
+          {[
+            ["Choose", "Pick a light or appliance in the app."],
+            ["Switch from anywhere", "For example, turn off a light you left on, or turn one on before you get home."],
+            ["See the change", "The app shows whether the appliance is on or off."],
+          ].map(([title, note]) => <div key={title} className="rounded-xl bg-muted/50 p-4"><h3 className="text-sm font-semibold">{title}</h3><p className="mt-1 text-xs leading-5 text-muted-foreground">{note}</p></div>)}
+        </div>
+        <p className="mt-4 text-xs leading-5 text-muted-foreground">Try the controls in the <Link href="/remote-control" className="font-semibold text-primary hover:underline">Remote Control</Link> tab.</p>
       </section>
 
       <section className="rounded-2xl border border-border/80 bg-card p-5 shadow-xs sm:p-7">

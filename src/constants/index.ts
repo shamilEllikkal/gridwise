@@ -101,6 +101,7 @@ export const NAV_ITEMS = [
   { href: "/solar", label: "Solar", icon: "Sun" },
   { href: "/reports", label: "Monthly Report", icon: "FileText" },
   { href: "/about", label: "About GRIDWISE", icon: "BookOpen" },
+  { href: "/remote-control", label: "Remote Control", icon: "Radio" },
   { href: "/settings", label: "Settings", icon: "Settings" },
 ] as const;
 

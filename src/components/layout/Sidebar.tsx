@@ -13,6 +13,7 @@ import {
   Sun,
   FileText,
   BookOpen,
+  Radio,
   Settings,
   Zap,
   ChevronRight,
@@ -31,6 +32,7 @@ const ICON_MAP = {
   Sun,
   FileText,
   BookOpen,
+  Radio,
   Settings,
   Zap,
 };

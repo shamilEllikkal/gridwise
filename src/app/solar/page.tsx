@@ -148,7 +148,7 @@ export default function SolarPage() {
 
       {/* Energy Flow Telemetry Widget */}
       <div className="p-5 rounded-2xl bg-card border border-border/80 shadow-xs">
-        <h2 className="text-base font-semibold mb-1">Where your solar power can go</h2>
+        <h2 className="text-base font-semibold mb-1">Where solar power goes</h2>
         <p className="text-xs text-muted-foreground mb-4">
           Estimated split between your home, battery and electricity grid.
         </p>
@@ -189,9 +189,15 @@ export default function SolarPage() {
               {formatPower(Math.max(0, currentSolarW - stats.current_power_w - 450))}
             </div>
             <p className="text-xs text-muted-foreground mt-1">
-              Any extra power may go to the KSEB grid if net metering is enabled.
+              Estimated extra power sent to KSEB. Export needs an approved net meter.
             </p>
           </div>
+        </div>
+        <div className="mt-4 rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-4">
+          <h3 className="text-sm font-semibold text-foreground">Can extra solar lower your bill or earn a credit?</h3>
+          <p className="mt-1 text-xs leading-5 text-muted-foreground">
+            With an approved net meter, extra units sent to KSEB are usually adjusted against electricity you draw from the grid. If units are still left after the applicable settlement period, KSEB may settle them under the current KSERC rules. The rate and payment method depend on your connection and the rules in effect; this estimate does not calculate a KSEB credit or cash payment.
+          </p>
         </div>
       </div>
 
