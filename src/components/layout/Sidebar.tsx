@@ -12,6 +12,7 @@ import {
   Activity,
   Sun,
   FileText,
+  BookOpen,
   Settings,
   Zap,
   ChevronRight,
@@ -29,6 +30,7 @@ const ICON_MAP = {
   Activity,
   Sun,
   FileText,
+  BookOpen,
   Settings,
   Zap,
 };
