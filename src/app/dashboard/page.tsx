@@ -118,7 +118,7 @@ export default function DashboardPage() {
           <div>
             <div className="flex items-center gap-2">
               <span className="text-sm font-semibold">
-                {isCurrentPeak ? "Peak Tariff Window Active (18:00 - 22:00)" : "Off-Peak Hours Active"}
+                {isCurrentPeak ? "Busy electricity hours" : "Less busy hours"}
               </span>
               <span
                 className={cn(
@@ -128,11 +128,11 @@ export default function DashboardPage() {
                     : "bg-primary/20 text-primary border border-primary/30"
                 )}
               >
-                {isCurrentPeak ? "High Tariff" : "Optimal Rates"}
+                {isCurrentPeak ? "Busy time" : "Usual time"}
               </span>
             </div>
             <p className="text-xs text-muted-foreground mt-0.5">
-              Tariff rate: ₹{state.household.tariff_rate}/unit · Connected Load: {state.household.connected_load_kw} kW
+              Bill estimate uses ₹{state.household.tariff_rate} per unit · Home power limit: {state.household.connected_load_kw} kW
             </p>
           </div>
         </div>
@@ -150,7 +150,7 @@ export default function DashboardPage() {
             className="flex-1 sm:flex-initial flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-medium transition-colors"
           >
             <Activity className="w-3.5 h-3.5" />
-            <span>Simulate Peak Shift</span>
+            <span>Try a different schedule</span>
           </Link>
         </div>
       </div>
@@ -176,7 +176,7 @@ export default function DashboardPage() {
           </div>
           <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground">
             <span>
-              Estimated use: {Math.round((stats.current_power_w / (state.household.connected_load_kw * 1000)) * 100)}% of {state.household.connected_load_kw} kW home limit
+              Using about {Math.round((stats.current_power_w / (state.household.connected_load_kw * 1000)) * 100)}% of your {state.household.connected_load_kw} kW home limit
             </span>
             <span className="text-primary font-medium flex items-center gap-1">
               <span className="w-1.5 h-1.5 rounded-full bg-primary animate-ping" />
@@ -229,9 +229,9 @@ export default function DashboardPage() {
             </span>
           </div>
           <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground">
-            <span>Current estimate: ₹{currentSlab.rate}/unit</span>
+            <span>Estimated price: ₹{currentSlab.rate} per unit</span>
             <span className="font-medium text-amber-500">
-              {unitsToNextSlab > 0 ? `${unitsToNextSlab} units to next rate` : "Highest rate"}
+              {unitsToNextSlab > 0 ? `About ${unitsToNextSlab} units before your per-unit price may rise` : "At the highest per-unit price"}
             </span>
           </div>
         </motion.div>
@@ -268,14 +268,14 @@ export default function DashboardPage() {
 
       {/* Energy Flow Diagram */}
       {(() => {
-        // Use peak solar hour (12:00) for demo so solar always shows a value
+        // Use midday solar output for the illustrative energy flow.
         const peakSolarKw = solarHourly.find((s) => s.hour === 12)?.solar_kw ?? 0;
         const currentSolarW = Math.round(peakSolarKw * 1000);
-        // EV: use any ev appliance or fallback to a demo value
+        // Use an EV appliance if present, otherwise show a typical charger example.
         const evAppliance = state.appliances.find((a) => a.category === "ev");
         const evW = evAppliance
           ? evAppliance.rated_power_w * evAppliance.quantity
-          : 3300; // demo fallback 3.3kW EV charger
+          : 3300; // sample 3.3 kW EV charger
         const batteryChargeW = currentSolarW > stats.current_power_w
           ? Math.min(500, currentSolarW - stats.current_power_w) : 0;
         const gridW = Math.max(0, stats.current_power_w - currentSolarW);
@@ -318,7 +318,7 @@ export default function DashboardPage() {
               <div>
                 <h2 className="text-base font-semibold">Electricity Use Through the Day</h2>
                 <p className="text-xs text-muted-foreground">
-                  Estimated home use and solar power by hour. Evening busy hours are 6–10 PM.
+                  Estimated electricity use and solar power through the day. Busy hours are usually morning and evening.
                 </p>
               </div>
               <div className="flex items-center gap-3 text-xs">
@@ -332,7 +332,7 @@ export default function DashboardPage() {
                 </span>
                 <span className="flex items-center gap-1.5">
                   <span className="w-2.5 h-2.5 rounded-full bg-red-400/80" />
-                  Evening busy hours
+                  Busy hours
                 </span>
               </div>
             </div>
@@ -445,14 +445,14 @@ export default function DashboardPage() {
                       color: "#fff",
                       fontSize: "12px",
                     }}
-                    formatter={(value) => [`${value} kWh/day`, "Daily Energy"]}
+                    formatter={(value) => [`${value} units/day`, "Daily use"]}
                   />
                 </PieChart>
               </ResponsiveContainer>
               {/* Centered Total */}
               <div className="absolute text-center pointer-events-none">
                 <span className="text-xl font-bold tabular-nums">
-                  {formatKwh(stats.total_today_kwh)}
+                  {`${stats.total_today_kwh.toLocaleString("en-IN", { maximumFractionDigits: 1 })} units`}
                 </span>
                   <span className="block text-[10px] text-muted-foreground">Estimated today</span>
               </div>
@@ -473,7 +473,7 @@ export default function DashboardPage() {
                     <span className="font-medium text-foreground">{item.name}</span>
                   </div>
                   <div className="tabular-nums text-muted-foreground font-mono">
-                    {item.value} kWh ({Math.round((item.value / stats.total_today_kwh) * 100)}%)
+                    {item.value} units ({Math.round((item.value / stats.total_today_kwh) * 100)}%)
                   </div>
                 </div>
               ))}
@@ -490,7 +490,7 @@ export default function DashboardPage() {
             <div>
               <h2 className="text-base font-semibold">Switch Appliances On or Off</h2>
               <p className="text-xs text-muted-foreground">
-                These switches update the app. They control real appliances only when connected hardware is set up.
+                These switches update the appliance status shown in GRIDWISE.
               </p>
             </div>
             <span className="text-xs px-2.5 py-1 rounded-full bg-secondary text-secondary-foreground font-medium">
@@ -534,7 +534,7 @@ export default function DashboardPage() {
                           <span>·</span>
                           <span className="capitalize">{appliance.category}</span>
                           {appliance.schedule_type === "flexible" && (
-                            <span className="text-[10px] text-amber-500 font-medium">(Flexible)</span>
+                            <span className="text-[10px] text-amber-500 font-medium">(Can wait)</span>
                           )}
                         </div>
                       </div>
@@ -561,7 +561,7 @@ export default function DashboardPage() {
 
           <div className="mt-4 pt-3 border-t border-border/60 flex items-center justify-between text-xs">
             <span className="text-muted-foreground">
-              Total controllable power:{" "}
+              Power used by appliances that are on:{" "}
               <strong>
                 {formatPower(
                   enrichedAppliances
@@ -571,7 +571,7 @@ export default function DashboardPage() {
               </strong>
             </span>
             <Link href="/appliances" className="text-primary font-medium hover:underline">
-              Manage inventory &rarr;
+              Manage appliances &rarr;
             </Link>
           </div>
         </div>
@@ -584,7 +584,7 @@ export default function DashboardPage() {
               <h2 className="text-base font-semibold">Small changes for a lighter bill</h2>
             </div>
             <p className="text-xs text-muted-foreground mb-4">
-              In Kerala, sunny hours can be useful for flexible jobs like washing. Your savings depend on your home.
+              In Kerala, sunny hours can help run appliances like the washing machine. Savings depend on your home.
             </p>
 
             <div className="space-y-3">

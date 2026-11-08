@@ -74,14 +74,14 @@ export function EnergyFlowDiagram({
       <div className="absolute top-0 left-0 right-0 flex items-start justify-between px-3 sm:px-6 pt-3 sm:pt-5 gap-2">
         <DataLabel
           value={formatPower(gridW)}
-          label="KSEB supply"
+          label="Power from KSEB"
           valueColor="#60a5fa"
           active={gridW > 0}
           align="left"
         />
         <DataLabel
           value={formatPower(solarW)}
-          label="Solar panels"
+          label="Power from solar"
           valueColor="#f59e0b"
           active={solarW > 0}
           align="center"
@@ -129,7 +129,7 @@ export function EnergyFlowDiagram({
         <div className="flex-1 flex justify-end">
           <DataLabel
             value={formatPower(evW)}
-            label="EV charger"
+            label="Car charger"
             valueColor="#22c55e"
             active={evW > 0}
             align="right"
